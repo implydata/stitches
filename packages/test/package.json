@@ -10,9 +10,10 @@
     "types/*.d.ts"
   ],
   "devDependencies": {
-    "@stitches/react": "1.2.6",
-    "@typescript-eslint/eslint-plugin": "^1.6.0",
-    "@typescript-eslint/parser": "^1.6.0",
+    "@stitches/core": "1.2.8",
+    "@stitches/react": "1.2.8",
+    "@typescript-eslint/eslint-plugin": "5.27.0",
+    "@typescript-eslint/parser": "5.27.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-prettier": "^3.0.1",
