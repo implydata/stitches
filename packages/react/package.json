@@ -5,11 +5,16 @@
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
-  "types": "types/index.d.ts",
+  "types": "types/ts4.1/index.d.ts",
   "typesVersions": {
+    ">= 4.7": {
+      "*": [
+        "types/ts4.7/index.d.ts"
+      ]
+    },
     ">= 4.1": {
       "*": [
-        "types/index.d.ts"
+        "types/ts4.1/index.d.ts"
       ]
     }
   },
@@ -17,7 +22,7 @@
   "unpkg": "dist/index.global.js",
   "exports": {
     ".": {
-      "types": "./types/index.d.ts",
+      "types": "./types/ts4.1/index.d.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
     },

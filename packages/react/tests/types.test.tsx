@@ -1,6 +1,6 @@
 // core types.tests.ts
-import * as Stitches from '../types/index'
-import { createStitches } from '../types/index'
+import * as Stitches from '../types/ts4.7/index'
+import { createStitches } from '../types/ts4.7/index'
 
 const { css, globalCss, keyframes, styled, theme } = createStitches({
 	utils: {
