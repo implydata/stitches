@@ -1,4 +1,4 @@
-import { createStitches } from '../types'
+import { createStitches } from '../types/ts4.7'
 
 const { css, toString } = createStitches({
 	media: {

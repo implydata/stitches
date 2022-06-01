@@ -1,4 +1,4 @@
-import { createStitches } from '../types/index'
+import { createStitches } from '../types/ts4.7/index'
 
 const { css, globalCss, keyframes } = createStitches({
 	utils: {
@@ -81,7 +81,7 @@ const PotatoButton = css({
 	},
 	compoundVariants: [
 		{
-			variant: 'blue',
+			hue: 'blue',
 			css: {
 				backgroundColor: '$gray200',
 			},
