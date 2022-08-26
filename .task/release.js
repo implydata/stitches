@@ -58,8 +58,8 @@ const main = async () => {
 
 	await cp.spawn('git', ['commit', '-m', state.version])
 	await cp.spawn('git', ['tag', state.version])
-	await cp.spawn('git', ['push'])
-	await cp.spawn('git', ['push', '--tags'])
+	await cp.spawn('git', ['push', 'imply'])
+	await cp.spawn('git', ['push', 'imply', '--tags'])
 
 	await cp.spawn('npm', ['publish', '--tag', state.npmtag, '--workspaces', '--otp', state.otp])
 }
