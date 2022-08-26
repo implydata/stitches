@@ -1,4 +1,4 @@
-import { createStitches } from '@stitches/react';
+import { createStitches } from '@implydata/stitches-react';
 import {
   gray,
   mauve,
@@ -115,8 +115,8 @@ import {
   bronzeDarkA,
   goldDarkA,
 } from '@radix-ui/colors';
-import type * as Stitches from '@stitches/react';
-export type { VariantProps } from '@stitches/react';
+import type * as Stitches from '@implydata/stitches-react';
+export type { VariantProps } from '@implydata/stitches-react';
 
 export const {
   styled,

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CSS } from './stitches.config';
-export declare const Text: import("@stitches/react/types/styled-component").StyledComponent<"span", {
+export declare const Text: import("@implydata/stitches-react/types/styled-component").StyledComponent<"span", {
     variant?: "red" | undefined;
 }, {
     bp1: "(min-width: 520px)";
@@ -11,7 +11,7 @@ export declare const Text: import("@stitches/react/types/styled-component").Styl
     hover: "(any-hover: hover)";
     dark: "(prefers-color-scheme: dark)";
     light: "(prefers-color-scheme: light)";
-}, import("@stitches/react/types/css-util").CSS<{
+}, import("@implydata/stitches-react/types/css-util").CSS<{
     bp1: "(min-width: 520px)";
     bp2: "(min-width: 900px)";
     bp3: "(min-width: 1200px)";
@@ -778,312 +778,312 @@ export declare const Text: import("@stitches/react/types/styled-component").Styl
         4: string;
         max: string;
     };
-}, import("@stitches/react/types/config").DefaultThemeMap, {
+}, import("@implydata/stitches-react/types/config").DefaultThemeMap, {
     p: (value: {
-        readonly [$$PropertyValue]: "padding";
+        readonly [x: symbol]: "padding";
     }) => {
         padding: {
-            readonly [$$PropertyValue]: "padding";
+            readonly [x: symbol]: "padding";
         };
     };
     pt: (value: {
-        readonly [$$PropertyValue]: "paddingTop";
+        readonly [x: symbol]: "paddingTop";
     }) => {
         paddingTop: {
-            readonly [$$PropertyValue]: "paddingTop";
+            readonly [x: symbol]: "paddingTop";
         };
     };
     pr: (value: {
-        readonly [$$PropertyValue]: "paddingRight";
+        readonly [x: symbol]: "paddingRight";
     }) => {
         paddingRight: {
-            readonly [$$PropertyValue]: "paddingRight";
+            readonly [x: symbol]: "paddingRight";
         };
     };
     pb: (value: {
-        readonly [$$PropertyValue]: "paddingBottom";
+        readonly [x: symbol]: "paddingBottom";
     }) => {
         paddingBottom: {
-            readonly [$$PropertyValue]: "paddingBottom";
+            readonly [x: symbol]: "paddingBottom";
         };
     };
     pl: (value: {
-        readonly [$$PropertyValue]: "paddingLeft";
+        readonly [x: symbol]: "paddingLeft";
     }) => {
         paddingLeft: {
-            readonly [$$PropertyValue]: "paddingLeft";
+            readonly [x: symbol]: "paddingLeft";
         };
     };
     px: (value: {
-        readonly [$$PropertyValue]: "paddingLeft";
+        readonly [x: symbol]: "paddingLeft";
     }) => {
         paddingLeft: {
-            readonly [$$PropertyValue]: "paddingLeft";
+            readonly [x: symbol]: "paddingLeft";
         };
         paddingRight: {
-            readonly [$$PropertyValue]: "paddingLeft";
+            readonly [x: symbol]: "paddingLeft";
         };
     };
     py: (value: {
-        readonly [$$PropertyValue]: "paddingTop";
+        readonly [x: symbol]: "paddingTop";
     }) => {
         paddingTop: {
-            readonly [$$PropertyValue]: "paddingTop";
+            readonly [x: symbol]: "paddingTop";
         };
         paddingBottom: {
-            readonly [$$PropertyValue]: "paddingTop";
+            readonly [x: symbol]: "paddingTop";
         };
     };
     m: (value: {
-        readonly [$$PropertyValue]: "margin";
+        readonly [x: symbol]: "margin";
     }) => {
         margin: {
-            readonly [$$PropertyValue]: "margin";
+            readonly [x: symbol]: "margin";
         };
     };
     mt: (value: {
-        readonly [$$PropertyValue]: "marginTop";
+        readonly [x: symbol]: "marginTop";
     }) => {
         marginTop: {
-            readonly [$$PropertyValue]: "marginTop";
+            readonly [x: symbol]: "marginTop";
         };
     };
     mr: (value: {
-        readonly [$$PropertyValue]: "marginRight";
+        readonly [x: symbol]: "marginRight";
     }) => {
         marginRight: {
-            readonly [$$PropertyValue]: "marginRight";
+            readonly [x: symbol]: "marginRight";
         };
     };
     mb: (value: {
-        readonly [$$PropertyValue]: "marginBottom";
+        readonly [x: symbol]: "marginBottom";
     }) => {
         marginBottom: {
-            readonly [$$PropertyValue]: "marginBottom";
+            readonly [x: symbol]: "marginBottom";
         };
     };
     ml: (value: {
-        readonly [$$PropertyValue]: "marginLeft";
+        readonly [x: symbol]: "marginLeft";
     }) => {
         marginLeft: {
-            readonly [$$PropertyValue]: "marginLeft";
+            readonly [x: symbol]: "marginLeft";
         };
     };
     mx: (value: {
-        readonly [$$PropertyValue]: "marginLeft";
+        readonly [x: symbol]: "marginLeft";
     }) => {
         marginLeft: {
-            readonly [$$PropertyValue]: "marginLeft";
+            readonly [x: symbol]: "marginLeft";
         };
         marginRight: {
-            readonly [$$PropertyValue]: "marginLeft";
+            readonly [x: symbol]: "marginLeft";
         };
     };
     my: (value: {
-        readonly [$$PropertyValue]: "marginTop";
+        readonly [x: symbol]: "marginTop";
     }) => {
         marginTop: {
-            readonly [$$PropertyValue]: "marginTop";
+            readonly [x: symbol]: "marginTop";
         };
         marginBottom: {
-            readonly [$$PropertyValue]: "marginTop";
+            readonly [x: symbol]: "marginTop";
         };
     };
     ta: (value: {
-        readonly [$$PropertyValue]: "textAlign";
+        readonly [x: symbol]: "textAlign";
     }) => {
         textAlign: {
-            readonly [$$PropertyValue]: "textAlign";
+            readonly [x: symbol]: "textAlign";
         };
     };
     fd: (value: {
-        readonly [$$PropertyValue]: "flexDirection";
+        readonly [x: symbol]: "flexDirection";
     }) => {
         flexDirection: {
-            readonly [$$PropertyValue]: "flexDirection";
+            readonly [x: symbol]: "flexDirection";
         };
     };
     fw: (value: {
-        readonly [$$PropertyValue]: "flexWrap";
+        readonly [x: symbol]: "flexWrap";
     }) => {
         flexWrap: {
-            readonly [$$PropertyValue]: "flexWrap";
+            readonly [x: symbol]: "flexWrap";
         };
     };
     ai: (value: {
-        readonly [$$PropertyValue]: "alignItems";
+        readonly [x: symbol]: "alignItems";
     }) => {
         alignItems: {
-            readonly [$$PropertyValue]: "alignItems";
+            readonly [x: symbol]: "alignItems";
         };
     };
     ac: (value: {
-        readonly [$$PropertyValue]: "alignContent";
+        readonly [x: symbol]: "alignContent";
     }) => {
         alignContent: {
-            readonly [$$PropertyValue]: "alignContent";
+            readonly [x: symbol]: "alignContent";
         };
     };
     jc: (value: {
-        readonly [$$PropertyValue]: "justifyContent";
+        readonly [x: symbol]: "justifyContent";
     }) => {
         justifyContent: {
-            readonly [$$PropertyValue]: "justifyContent";
+            readonly [x: symbol]: "justifyContent";
         };
     };
     as: (value: {
-        readonly [$$PropertyValue]: "alignSelf";
+        readonly [x: symbol]: "alignSelf";
     }) => {
         alignSelf: {
-            readonly [$$PropertyValue]: "alignSelf";
+            readonly [x: symbol]: "alignSelf";
         };
     };
     fg: (value: {
-        readonly [$$PropertyValue]: "flexGrow";
+        readonly [x: symbol]: "flexGrow";
     }) => {
         flexGrow: {
-            readonly [$$PropertyValue]: "flexGrow";
+            readonly [x: symbol]: "flexGrow";
         };
     };
     fs: (value: {
-        readonly [$$PropertyValue]: "flexShrink";
+        readonly [x: symbol]: "flexShrink";
     }) => {
         flexShrink: {
-            readonly [$$PropertyValue]: "flexShrink";
+            readonly [x: symbol]: "flexShrink";
         };
     };
     fb: (value: {
-        readonly [$$PropertyValue]: "flexBasis";
+        readonly [x: symbol]: "flexBasis";
     }) => {
         flexBasis: {
-            readonly [$$PropertyValue]: "flexBasis";
+            readonly [x: symbol]: "flexBasis";
         };
     };
     bc: (value: {
-        readonly [$$PropertyValue]: "backgroundColor";
+        readonly [x: symbol]: "backgroundColor";
     }) => {
         backgroundColor: {
-            readonly [$$PropertyValue]: "backgroundColor";
+            readonly [x: symbol]: "backgroundColor";
         };
     };
     br: (value: {
-        readonly [$$PropertyValue]: "borderRadius";
+        readonly [x: symbol]: "borderRadius";
     }) => {
         borderRadius: {
-            readonly [$$PropertyValue]: "borderRadius";
+            readonly [x: symbol]: "borderRadius";
         };
     };
     btrr: (value: {
-        readonly [$$PropertyValue]: "borderTopRightRadius";
+        readonly [x: symbol]: "borderTopRightRadius";
     }) => {
         borderTopRightRadius: {
-            readonly [$$PropertyValue]: "borderTopRightRadius";
+            readonly [x: symbol]: "borderTopRightRadius";
         };
     };
     bbrr: (value: {
-        readonly [$$PropertyValue]: "borderBottomRightRadius";
+        readonly [x: symbol]: "borderBottomRightRadius";
     }) => {
         borderBottomRightRadius: {
-            readonly [$$PropertyValue]: "borderBottomRightRadius";
+            readonly [x: symbol]: "borderBottomRightRadius";
         };
     };
     bblr: (value: {
-        readonly [$$PropertyValue]: "borderBottomLeftRadius";
+        readonly [x: symbol]: "borderBottomLeftRadius";
     }) => {
         borderBottomLeftRadius: {
-            readonly [$$PropertyValue]: "borderBottomLeftRadius";
+            readonly [x: symbol]: "borderBottomLeftRadius";
         };
     };
     btlr: (value: {
-        readonly [$$PropertyValue]: "borderTopLeftRadius";
+        readonly [x: symbol]: "borderTopLeftRadius";
     }) => {
         borderTopLeftRadius: {
-            readonly [$$PropertyValue]: "borderTopLeftRadius";
+            readonly [x: symbol]: "borderTopLeftRadius";
         };
     };
     bs: (value: {
-        readonly [$$PropertyValue]: "boxShadow";
+        readonly [x: symbol]: "boxShadow";
     }) => {
         boxShadow: {
-            readonly [$$PropertyValue]: "boxShadow";
+            readonly [x: symbol]: "boxShadow";
         };
     };
     lh: (value: {
-        readonly [$$PropertyValue]: "lineHeight";
+        readonly [x: symbol]: "lineHeight";
     }) => {
         lineHeight: {
-            readonly [$$PropertyValue]: "lineHeight";
+            readonly [x: symbol]: "lineHeight";
         };
     };
     ox: (value: {
-        readonly [$$PropertyValue]: "overflowX";
+        readonly [x: symbol]: "overflowX";
     }) => {
         overflowX: {
-            readonly [$$PropertyValue]: "overflowX";
+            readonly [x: symbol]: "overflowX";
         };
     };
     oy: (value: {
-        readonly [$$PropertyValue]: "overflowY";
+        readonly [x: symbol]: "overflowY";
     }) => {
         overflowY: {
-            readonly [$$PropertyValue]: "overflowY";
+            readonly [x: symbol]: "overflowY";
         };
     };
     pe: (value: {
-        readonly [$$PropertyValue]: "pointerEvents";
+        readonly [x: symbol]: "pointerEvents";
     }) => {
         pointerEvents: {
-            readonly [$$PropertyValue]: "pointerEvents";
+            readonly [x: symbol]: "pointerEvents";
         };
     };
     us: (value: {
-        readonly [$$PropertyValue]: "userSelect";
+        readonly [x: symbol]: "userSelect";
     }) => {
         WebkitUserSelect: {
-            readonly [$$PropertyValue]: "userSelect";
+            readonly [x: symbol]: "userSelect";
         };
         userSelect: {
-            readonly [$$PropertyValue]: "userSelect";
+            readonly [x: symbol]: "userSelect";
         };
     };
     userSelect: (value: {
-        readonly [$$PropertyValue]: "userSelect";
+        readonly [x: symbol]: "userSelect";
     }) => {
         WebkitUserSelect: {
-            readonly [$$PropertyValue]: "userSelect";
+            readonly [x: symbol]: "userSelect";
         };
         userSelect: {
-            readonly [$$PropertyValue]: "userSelect";
+            readonly [x: symbol]: "userSelect";
         };
     };
     size: (value: {
-        readonly [$$PropertyValue]: "width";
+        readonly [x: symbol]: "width";
     }) => {
         width: {
-            readonly [$$PropertyValue]: "width";
+            readonly [x: symbol]: "width";
         };
         height: {
-            readonly [$$PropertyValue]: "width";
+            readonly [x: symbol]: "width";
         };
     };
     appearance: (value: {
-        readonly [$$PropertyValue]: "appearance";
+        readonly [x: symbol]: "appearance";
     }) => {
         WebkitAppearance: {
-            readonly [$$PropertyValue]: "appearance";
+            readonly [x: symbol]: "appearance";
         };
         appearance: {
-            readonly [$$PropertyValue]: "appearance";
+            readonly [x: symbol]: "appearance";
         };
     };
     backgroundClip: (value: {
-        readonly [$$PropertyValue]: "backgroundClip";
+        readonly [x: symbol]: "backgroundClip";
     }) => {
         WebkitBackgroundClip: {
-            readonly [$$PropertyValue]: "backgroundClip";
+            readonly [x: symbol]: "backgroundClip";
         };
         backgroundClip: {
-            readonly [$$PropertyValue]: "backgroundClip";
+            readonly [x: symbol]: "backgroundClip";
         };
     };
 }>>;
