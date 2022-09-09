@@ -779,312 +779,134 @@ export declare const Text: import("@implydata/stitches-react/types/styled-compon
         max: string;
     };
 }, import("@implydata/stitches-react/types/config").DefaultThemeMap, {
-    p: (value: {
-        readonly [x: symbol]: "padding";
-    }) => {
-        padding: {
-            readonly [x: symbol]: "padding";
-        };
+    p: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"padding">) => {
+        padding: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"padding">;
     };
-    pt: (value: {
-        readonly [x: symbol]: "paddingTop";
-    }) => {
-        paddingTop: {
-            readonly [x: symbol]: "paddingTop";
-        };
+    pt: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingTop">) => {
+        paddingTop: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingTop">;
     };
-    pr: (value: {
-        readonly [x: symbol]: "paddingRight";
-    }) => {
-        paddingRight: {
-            readonly [x: symbol]: "paddingRight";
-        };
+    pr: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingRight">) => {
+        paddingRight: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingRight">;
     };
-    pb: (value: {
-        readonly [x: symbol]: "paddingBottom";
-    }) => {
-        paddingBottom: {
-            readonly [x: symbol]: "paddingBottom";
-        };
+    pb: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingBottom">) => {
+        paddingBottom: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingBottom">;
     };
-    pl: (value: {
-        readonly [x: symbol]: "paddingLeft";
-    }) => {
-        paddingLeft: {
-            readonly [x: symbol]: "paddingLeft";
-        };
+    pl: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingLeft">) => {
+        paddingLeft: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingLeft">;
     };
-    px: (value: {
-        readonly [x: symbol]: "paddingLeft";
-    }) => {
-        paddingLeft: {
-            readonly [x: symbol]: "paddingLeft";
-        };
-        paddingRight: {
-            readonly [x: symbol]: "paddingLeft";
-        };
+    px: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingLeft">) => {
+        paddingLeft: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingLeft">;
+        paddingRight: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingLeft">;
     };
-    py: (value: {
-        readonly [x: symbol]: "paddingTop";
-    }) => {
-        paddingTop: {
-            readonly [x: symbol]: "paddingTop";
-        };
-        paddingBottom: {
-            readonly [x: symbol]: "paddingTop";
-        };
+    py: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingTop">) => {
+        paddingTop: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingTop">;
+        paddingBottom: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"paddingTop">;
     };
-    m: (value: {
-        readonly [x: symbol]: "margin";
-    }) => {
-        margin: {
-            readonly [x: symbol]: "margin";
-        };
+    m: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"margin">) => {
+        margin: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"margin">;
     };
-    mt: (value: {
-        readonly [x: symbol]: "marginTop";
-    }) => {
-        marginTop: {
-            readonly [x: symbol]: "marginTop";
-        };
+    mt: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginTop">) => {
+        marginTop: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginTop">;
     };
-    mr: (value: {
-        readonly [x: symbol]: "marginRight";
-    }) => {
-        marginRight: {
-            readonly [x: symbol]: "marginRight";
-        };
+    mr: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginRight">) => {
+        marginRight: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginRight">;
     };
-    mb: (value: {
-        readonly [x: symbol]: "marginBottom";
-    }) => {
-        marginBottom: {
-            readonly [x: symbol]: "marginBottom";
-        };
+    mb: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginBottom">) => {
+        marginBottom: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginBottom">;
     };
-    ml: (value: {
-        readonly [x: symbol]: "marginLeft";
-    }) => {
-        marginLeft: {
-            readonly [x: symbol]: "marginLeft";
-        };
+    ml: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginLeft">) => {
+        marginLeft: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginLeft">;
     };
-    mx: (value: {
-        readonly [x: symbol]: "marginLeft";
-    }) => {
-        marginLeft: {
-            readonly [x: symbol]: "marginLeft";
-        };
-        marginRight: {
-            readonly [x: symbol]: "marginLeft";
-        };
+    mx: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginLeft">) => {
+        marginLeft: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginLeft">;
+        marginRight: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginLeft">;
     };
-    my: (value: {
-        readonly [x: symbol]: "marginTop";
-    }) => {
-        marginTop: {
-            readonly [x: symbol]: "marginTop";
-        };
-        marginBottom: {
-            readonly [x: symbol]: "marginTop";
-        };
+    my: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginTop">) => {
+        marginTop: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginTop">;
+        marginBottom: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"marginTop">;
     };
-    ta: (value: {
-        readonly [x: symbol]: "textAlign";
-    }) => {
-        textAlign: {
-            readonly [x: symbol]: "textAlign";
-        };
+    ta: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"textAlign">) => {
+        textAlign: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"textAlign">;
     };
-    fd: (value: {
-        readonly [x: symbol]: "flexDirection";
-    }) => {
-        flexDirection: {
-            readonly [x: symbol]: "flexDirection";
-        };
+    fd: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"flexDirection">) => {
+        flexDirection: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"flexDirection">;
     };
-    fw: (value: {
-        readonly [x: symbol]: "flexWrap";
-    }) => {
-        flexWrap: {
-            readonly [x: symbol]: "flexWrap";
-        };
+    fw: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"flexWrap">) => {
+        flexWrap: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"flexWrap">;
     };
-    ai: (value: {
-        readonly [x: symbol]: "alignItems";
-    }) => {
-        alignItems: {
-            readonly [x: symbol]: "alignItems";
-        };
+    ai: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"alignItems">) => {
+        alignItems: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"alignItems">;
     };
-    ac: (value: {
-        readonly [x: symbol]: "alignContent";
-    }) => {
-        alignContent: {
-            readonly [x: symbol]: "alignContent";
-        };
+    ac: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"alignContent">) => {
+        alignContent: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"alignContent">;
     };
-    jc: (value: {
-        readonly [x: symbol]: "justifyContent";
-    }) => {
-        justifyContent: {
-            readonly [x: symbol]: "justifyContent";
-        };
+    jc: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"justifyContent">) => {
+        justifyContent: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"justifyContent">;
     };
-    as: (value: {
-        readonly [x: symbol]: "alignSelf";
-    }) => {
-        alignSelf: {
-            readonly [x: symbol]: "alignSelf";
-        };
+    as: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"alignSelf">) => {
+        alignSelf: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"alignSelf">;
     };
-    fg: (value: {
-        readonly [x: symbol]: "flexGrow";
-    }) => {
-        flexGrow: {
-            readonly [x: symbol]: "flexGrow";
-        };
+    fg: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"flexGrow">) => {
+        flexGrow: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"flexGrow">;
     };
-    fs: (value: {
-        readonly [x: symbol]: "flexShrink";
-    }) => {
-        flexShrink: {
-            readonly [x: symbol]: "flexShrink";
-        };
+    fs: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"flexShrink">) => {
+        flexShrink: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"flexShrink">;
     };
-    fb: (value: {
-        readonly [x: symbol]: "flexBasis";
-    }) => {
-        flexBasis: {
-            readonly [x: symbol]: "flexBasis";
-        };
+    fb: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"flexBasis">) => {
+        flexBasis: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"flexBasis">;
     };
-    bc: (value: {
-        readonly [x: symbol]: "backgroundColor";
-    }) => {
-        backgroundColor: {
-            readonly [x: symbol]: "backgroundColor";
-        };
+    bc: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"backgroundColor">) => {
+        backgroundColor: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"backgroundColor">;
     };
-    br: (value: {
-        readonly [x: symbol]: "borderRadius";
-    }) => {
-        borderRadius: {
-            readonly [x: symbol]: "borderRadius";
-        };
+    br: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"borderRadius">) => {
+        borderRadius: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"borderRadius">;
     };
-    btrr: (value: {
-        readonly [x: symbol]: "borderTopRightRadius";
-    }) => {
-        borderTopRightRadius: {
-            readonly [x: symbol]: "borderTopRightRadius";
-        };
+    btrr: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"borderTopRightRadius">) => {
+        borderTopRightRadius: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"borderTopRightRadius">;
     };
-    bbrr: (value: {
-        readonly [x: symbol]: "borderBottomRightRadius";
-    }) => {
-        borderBottomRightRadius: {
-            readonly [x: symbol]: "borderBottomRightRadius";
-        };
+    bbrr: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"borderBottomRightRadius">) => {
+        borderBottomRightRadius: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"borderBottomRightRadius">;
     };
-    bblr: (value: {
-        readonly [x: symbol]: "borderBottomLeftRadius";
-    }) => {
-        borderBottomLeftRadius: {
-            readonly [x: symbol]: "borderBottomLeftRadius";
-        };
+    bblr: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"borderBottomLeftRadius">) => {
+        borderBottomLeftRadius: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"borderBottomLeftRadius">;
     };
-    btlr: (value: {
-        readonly [x: symbol]: "borderTopLeftRadius";
-    }) => {
-        borderTopLeftRadius: {
-            readonly [x: symbol]: "borderTopLeftRadius";
-        };
+    btlr: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"borderTopLeftRadius">) => {
+        borderTopLeftRadius: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"borderTopLeftRadius">;
     };
-    bs: (value: {
-        readonly [x: symbol]: "boxShadow";
-    }) => {
-        boxShadow: {
-            readonly [x: symbol]: "boxShadow";
-        };
+    bs: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"boxShadow">) => {
+        boxShadow: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"boxShadow">;
     };
-    lh: (value: {
-        readonly [x: symbol]: "lineHeight";
-    }) => {
-        lineHeight: {
-            readonly [x: symbol]: "lineHeight";
-        };
+    lh: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"lineHeight">) => {
+        lineHeight: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"lineHeight">;
     };
-    ox: (value: {
-        readonly [x: symbol]: "overflowX";
-    }) => {
-        overflowX: {
-            readonly [x: symbol]: "overflowX";
-        };
+    ox: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"overflowX">) => {
+        overflowX: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"overflowX">;
     };
-    oy: (value: {
-        readonly [x: symbol]: "overflowY";
-    }) => {
-        overflowY: {
-            readonly [x: symbol]: "overflowY";
-        };
+    oy: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"overflowY">) => {
+        overflowY: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"overflowY">;
     };
-    pe: (value: {
-        readonly [x: symbol]: "pointerEvents";
-    }) => {
-        pointerEvents: {
-            readonly [x: symbol]: "pointerEvents";
-        };
+    pe: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"pointerEvents">) => {
+        pointerEvents: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"pointerEvents">;
     };
-    us: (value: {
-        readonly [x: symbol]: "userSelect";
-    }) => {
-        WebkitUserSelect: {
-            readonly [x: symbol]: "userSelect";
-        };
-        userSelect: {
-            readonly [x: symbol]: "userSelect";
-        };
+    us: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"userSelect">) => {
+        WebkitUserSelect: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"userSelect">;
+        userSelect: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"userSelect">;
     };
-    userSelect: (value: {
-        readonly [x: symbol]: "userSelect";
-    }) => {
-        WebkitUserSelect: {
-            readonly [x: symbol]: "userSelect";
-        };
-        userSelect: {
-            readonly [x: symbol]: "userSelect";
-        };
+    userSelect: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"userSelect">) => {
+        WebkitUserSelect: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"userSelect">;
+        userSelect: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"userSelect">;
     };
-    size: (value: {
-        readonly [x: symbol]: "width";
-    }) => {
-        width: {
-            readonly [x: symbol]: "width";
-        };
-        height: {
-            readonly [x: symbol]: "width";
-        };
+    size: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"width">) => {
+        width: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"width">;
+        height: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"width">;
     };
-    appearance: (value: {
-        readonly [x: symbol]: "appearance";
-    }) => {
-        WebkitAppearance: {
-            readonly [x: symbol]: "appearance";
-        };
-        appearance: {
-            readonly [x: symbol]: "appearance";
-        };
+    appearance: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"appearance">) => {
+        WebkitAppearance: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"appearance">;
+        appearance: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"appearance">;
     };
-    backgroundClip: (value: {
-        readonly [x: symbol]: "backgroundClip";
-    }) => {
-        WebkitBackgroundClip: {
-            readonly [x: symbol]: "backgroundClip";
-        };
-        backgroundClip: {
-            readonly [x: symbol]: "backgroundClip";
-        };
+    backgroundClip: (value: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"backgroundClip">) => {
+        WebkitBackgroundClip: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"backgroundClip">;
+        backgroundClip: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"backgroundClip">;
     };
 }>>;
 declare const DEFAULT_TAG = "h1";

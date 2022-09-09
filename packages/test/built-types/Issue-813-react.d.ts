@@ -11,14 +11,10 @@ export declare const config: {
     themeMap: import("@implydata/stitches-react/types/config").DefaultThemeMap;
     utils: {
         bg: (value: Stitches.PropertyValue<'backgroundColor'>) => {
-            color: {
-                readonly [x: symbol]: "backgroundColor";
-            };
+            color: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"backgroundColor">;
         };
         c: (value: Stitches.ScaleValue<'colors'>) => {
-            color: {
-                readonly [x: symbol]: "colors";
-            };
+            color: import("@implydata/stitches-react/types/css-util").WithScaleValue<"colors">;
         };
     };
 }, styled: <Type extends import("@implydata/stitches-react/types/util").Function | keyof JSX.IntrinsicElements | import("react").ComponentType<any>, Composers extends (string | import("@implydata/stitches-react/types/util").Function | import("react").ComponentType<any> | {
@@ -29,14 +25,10 @@ export declare const config: {
     };
 }, import("@implydata/stitches-react/types/config").DefaultThemeMap, {
     bg: (value: Stitches.PropertyValue<'backgroundColor'>) => {
-        color: {
-            readonly [x: symbol]: "backgroundColor";
-        };
+        color: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"backgroundColor">;
     };
     c: (value: Stitches.ScaleValue<'colors'>) => {
-        color: {
-            readonly [x: symbol]: "colors";
-        };
+        color: import("@implydata/stitches-react/types/css-util").WithScaleValue<"colors">;
     };
 }>>(type: Type, ...composers: { [K in keyof Composers]: string extends Composers[K] ? Composers[K] : Composers[K] extends string | import("@implydata/stitches-react/types/util").Function | import("react").ComponentType<any> ? Composers[K] : import("@implydata/stitches-react/types/stitches").RemoveIndex<CSS> & {
     variants?: {
@@ -55,14 +47,10 @@ export declare const config: {
     };
 }, import("@implydata/stitches-react/types/config").DefaultThemeMap, {
     bg: (value: Stitches.PropertyValue<'backgroundColor'>) => {
-        color: {
-            readonly [x: symbol]: "backgroundColor";
-        };
+        color: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"backgroundColor">;
     };
     c: (value: Stitches.ScaleValue<'colors'>) => {
-        color: {
-            readonly [x: symbol]: "colors";
-        };
+        color: import("@implydata/stitches-react/types/css-util").WithScaleValue<"colors">;
     };
 }>>;
 export declare const colorValue1: Stitches.PropertyValue<'backgroundColor', typeof config>;
@@ -74,13 +62,9 @@ export declare const Box: import("@implydata/stitches-react/types/styled-compone
     };
 }, import("@implydata/stitches-react/types/config").DefaultThemeMap, {
     bg: (value: Stitches.PropertyValue<'backgroundColor'>) => {
-        color: {
-            readonly [x: symbol]: "backgroundColor";
-        };
+        color: import("@implydata/stitches-react/types/css-util").WithPropertyValue<"backgroundColor">;
     };
     c: (value: Stitches.ScaleValue<'colors'>) => {
-        color: {
-            readonly [x: symbol]: "colors";
-        };
+        color: import("@implydata/stitches-react/types/css-util").WithScaleValue<"colors">;
     };
 }>>;

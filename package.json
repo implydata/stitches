@@ -22,22 +22,20 @@
     "test:coverage": "node .task/test-coverage.js .task/test.js",
     "test:watch": "node .task/test.js --watch"
   },
-  "workspaces": {
-    "packages": [
-      "packages/core",
-      "packages/react",
-      "packages/test",
-      "packages/stringify"
-    ]
-  },
+  "workspaces": [
+    "packages/core",
+    "packages/react",
+    "packages/test",
+    "packages/stringify"
+   ],
   "dependencies": {
     "@skypack/package-check": "0.2.2",
     "@types/node": "16.9.6",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
     "@types/react-test-renderer": "17.0.1",
-    "@typescript-eslint/eslint-plugin": "5.35.1",
-    "@typescript-eslint/parser": "5.35.1",
+    "@typescript-eslint/eslint-plugin": "5.36.2",
+    "@typescript-eslint/parser": "5.36.2",
     "acorn": "8.5.0",
     "acorn-class-fields": "1.0.0",
     "acorn-import-assertions": "1.7.6",

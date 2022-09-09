@@ -10,14 +10,10 @@ export declare const config: {
     themeMap: import("@implydata/stitches-core/types/config").DefaultThemeMap;
     utils: {
         bg: (value: Stitches.PropertyValue<'backgroundColor'>) => {
-            color: {
-                readonly [x: symbol]: "backgroundColor";
-            };
+            color: import("@implydata/stitches-core/types/css-util").WithPropertyValue<"backgroundColor">;
         };
         c: (value: Stitches.ScaleValue<'colors'>) => {
-            color: {
-                readonly [x: symbol]: "colors";
-            };
+            color: import("@implydata/stitches-core/types/css-util").WithScaleValue<"colors">;
         };
     };
 }, css: <Composers extends (string | import("@implydata/stitches-core/types/util").Function | {
@@ -28,14 +24,10 @@ export declare const config: {
     };
 }, import("@implydata/stitches-core/types/config").DefaultThemeMap, {
     bg: (value: Stitches.PropertyValue<'backgroundColor'>) => {
-        color: {
-            readonly [x: symbol]: "backgroundColor";
-        };
+        color: import("@implydata/stitches-core/types/css-util").WithPropertyValue<"backgroundColor">;
     };
     c: (value: Stitches.ScaleValue<'colors'>) => {
-        color: {
-            readonly [x: symbol]: "colors";
-        };
+        color: import("@implydata/stitches-core/types/css-util").WithScaleValue<"colors">;
     };
 }>>(...composers: { [K in keyof Composers]: string extends Composers[K] ? Composers[K] : Composers[K] extends string | import("@implydata/stitches-core/types/util").Function ? Composers[K] : import("@implydata/stitches-core/types/stitches").RemoveIndex<CSS> & {
     variants?: {
@@ -58,13 +50,9 @@ export declare const box: import("@implydata/stitches-core/types/styled-componen
     };
 }, import("@implydata/stitches-core/types/config").DefaultThemeMap, {
     bg: (value: Stitches.PropertyValue<'backgroundColor'>) => {
-        color: {
-            readonly [x: symbol]: "backgroundColor";
-        };
+        color: import("@implydata/stitches-core/types/css-util").WithPropertyValue<"backgroundColor">;
     };
     c: (value: Stitches.ScaleValue<'colors'>) => {
-        color: {
-            readonly [x: symbol]: "colors";
-        };
+        color: import("@implydata/stitches-core/types/css-util").WithScaleValue<"colors">;
     };
 }>>;

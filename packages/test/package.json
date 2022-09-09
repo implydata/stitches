@@ -13,7 +13,6 @@
     "build": "tsc --generateTrace traces --incremental false"
   },
   "devDependencies": {
-    "@implydata/stitches-react": "1.2.9-3",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
     "@typescript-eslint/parser": "^1.6.0",
     "eslint-config-prettier": "^4.1.0",
