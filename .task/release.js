@@ -22,7 +22,7 @@ const main = async () => {
 	const workspacepkgpaths = new Set()
 	const workspacetags = new Set()
 
-	for (let workspace of pkg.workspaces.packages) {
+	for (let workspace of pkg.workspaces) {
 		workspace = root.to(workspace).dir
 
 		const workspacepkgpath = workspace.to('package.json')
