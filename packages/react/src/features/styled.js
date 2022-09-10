@@ -11,16 +11,16 @@ import { createCssFunction } from '../../../core/src/features/css.js'
 const createCssFunctionMap = createMemo()
 
 /** Returns a function that applies component styles. */
-export const createStyledFunction = ({ /** @type {Config} */ config, /** @type {GroupSheet} */ sheet }, supportsInsertionEffects) =>
+export const createStyledFunction = ({ /** @type {Config} */ config, /** @type {GroupSheet} */ sheet }) => (
 	createCssFunctionMap(config, () => {
-		const css = createCssFunction(config, sheet, supportsInsertionEffects)
+		const css = createCssFunction(config, sheet)
 
 		const styled = (...args) => {
 			const cssComponent = css(...args)
 			const DefaultType = cssComponent[internal].type
 
 			const styledComponent = React.forwardRef((props, ref) => {
-				const Type = (props && props.as) || DefaultType
+				const Type = props && props.as || DefaultType
 
 				const { props: forwardProps, deferredInjector } = cssComponent(props)
 
@@ -28,11 +28,7 @@ export const createStyledFunction = ({ /** @type {Config} */ config, /** @type {
 
 				forwardProps.ref = ref
 
-				if (supportsInsertionEffects) {
-					// This technically violates the rules of hooks, but 'supportsInsertionEffects'
-					// will never change values between renders
-					React.useInsertionEffect(() => void deferredInjector())
-				} else if (deferredInjector) {
+				if (deferredInjector) {
 					return React.createElement(React.Fragment, null, React.createElement(Type, forwardProps), React.createElement(deferredInjector, null))
 				}
 
@@ -52,3 +48,4 @@ export const createStyledFunction = ({ /** @type {Config} */ config, /** @type {
 
 		return styled
 	})
+)

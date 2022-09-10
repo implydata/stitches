@@ -11,7 +11,7 @@ import { createSheet } from './sheet.js'
 
 const createCssMap = createMemo()
 
-export const createStitches = (config, alwaysDeferred) => {
+export const createStitches = (config) => {
 	let didRun = false
 
 	const instance = createCssMap(config, (initConfig) => {
@@ -40,7 +40,7 @@ export const createStitches = (config, alwaysDeferred) => {
 		const sheet = createSheet(root)
 
 		const returnValue = {
-			css: createCssFunction(config, sheet, alwaysDeferred),
+			css: createCssFunction(config, sheet),
 			globalCss: createGlobalCssFunction(config, sheet),
 			keyframes: createKeyframesFunction(config, sheet),
 			createTheme: createCreateThemeFunction(config, sheet),

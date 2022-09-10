@@ -274,7 +274,6 @@ export default interface Stitches<
 			CSSUtil.CSS<Media, Theme, ThemeMap, Utils>
 		>
 	}
-	useGlobalCss(css: () => string): void
 }
 
 type ThemeTokens<Values, Prefix> = {
