@@ -7,22 +7,13 @@ import { toSizingValue } from './toSizingValue.js'
 import { toTailDashed } from './toTailDashed.js'
 import { toTokenizedValue } from './toTokenizedValue.js'
 
-/** @typedef {import('../createCss.js').Config} Config */
-/** @typedef {import('../createCss.js').Style} Style */
-
 /** Comma matcher outside rounded brackets. */
 const comma = /\s*,\s*(?![^()]*\))/
 
 /** Default toString method of Objects. */
 const toStringOfObject = Object.prototype.toString
 
-export const toCssRules = (
-	/** @type {Style} */ style,
-	/** @type {string[]} */ selectors,
-	/** @type {string[]} */ conditions,
-	/** @type {Config} */ config,
-	/** @type {(cssText: string) => any} */ onCssText
-) => {
+export const toCssRules = (style, selectors, conditions, config, onCssText) => {
 	/** @type {[string[], string[], string[]]} CSSOM-compatible rule being created. */
 	let currentRule = undefined
 
@@ -52,20 +43,24 @@ export const toCssRules = (
 				const datas = isAtRuleLike && Array.isArray(style[name]) ? style[name] : [style[name]]
 
 				for (data of datas) {
-					/** Whether the current data represents a nesting rule. */
-					const isRuleLike = typeof data === 'object' && data && data.toString === toStringOfObject
-
 					const camelName = toCamelCase(name)
+
+					/** Whether the current data represents a nesting rule, which is a plain object whose key is not already a util. */
+					const isRuleLike =
+						typeof data === 'object' &&
+						data &&
+						data.toString === toStringOfObject &&
+						(!config.utils[camelName] || !selectors.length)
 
 					// if the left-hand "name" matches a configured utility
 					// conditionally transform the current data using the configured utility
-					if (camelName in config.utils) {
+					if (camelName in config.utils && !isRuleLike) {
 						const util = config.utils[camelName]
 
 						if (util !== lastUtil) {
 							lastUtil = util
 
-							each(util(config)(data))
+							each(util(data))
 
 							lastUtil = null
 
@@ -91,7 +86,9 @@ export const toCssRules = (
 					// if the left-hand "name" matches a configured at-rule
 					if (isAtRuleLike) {
 						// transform the current name with the configured media at-rule prelude
-						name = toResolvedMediaQueryRanges(name.slice(1) in config.media ? '@media ' + config.media[name.slice(1)] : name)
+						name = toResolvedMediaQueryRanges(
+							name.slice(1) in config.media ? '@media ' + config.media[name.slice(1)] : name,
+						)
 					}
 
 					if (isRuleLike) {
@@ -112,24 +109,27 @@ export const toCssRules = (
 						if (currentRule === undefined) currentRule = [[], selectors, conditions]
 
 						/** CSS left-hand side value, which may be a specially-formatted custom property. */
-						name = !isAtRuleLike && name.charCodeAt(0) === 36 ? `--${toTailDashed(config.prefix)}${name.slice(1).replace(/\$/g, '-')}` : name
+						name =
+							!isAtRuleLike && name.charCodeAt(0) === 36
+								? `--${toTailDashed(config.prefix)}${name.slice(1).replace(/\$/g, '-')}`
+								: name
 
 						/** CSS right-hand side value, which may be a specially-formatted custom property. */
-						data = (
+						data =
 							// preserve object-like data
-							isRuleLike ? data
-							// replace specially-marked numeric property values with pixel versions
-							: typeof data === 'number'
-								? data && camelName in unitProps
-									? String(data) + 'px'
-								: String(data)
-							// replace tokens with stringified primitive values
-							: toTokenizedValue(
-								toSizingValue(camelName, data),
-								config.prefix,
-								config.themeMap[camelName]
-							)
-						)
+							isRuleLike
+								? data
+								: // replace all non-unitless props that are not custom properties with pixel versions
+									typeof data === 'number'
+									? data && !(camelName in unitlessProps) && !(name.charCodeAt(0) === 45)
+										? String(data) + 'px'
+										: String(data)
+									: // replace tokens with stringified primitive values
+										toTokenizedValue(
+											toSizingValue(camelName, data == null ? '' : data),
+											config.prefix,
+											config.themeMap[camelName],
+										)
 
 						currentRule[0].push(`${isAtRuleLike ? `${name} ` : `${toHyphenCase(name)}:`}${data}`)
 					}
@@ -146,143 +146,58 @@ export const toCssRules = (
 	}
 
 	walk(style, selectors, conditions)
-} // prettier-ignore
+}
 
-const toCssString = (/** @type {string[]} */ declarations, /** @type {string[]} */ selectors, /** @type {string[]} */ conditions) => (
+const toCssString = (declarations, selectors, conditions) =>
 	`${conditions.map((condition) => `${condition}{`).join('')}${selectors.length ? `${selectors.join(',')}{` : ''}${declarations.join(';')}${selectors.length ? `}` : ''}${Array(conditions.length ? conditions.length + 1 : 0).join('}')}`
-) // prettier-ignore
 
-/** CSS Properties whose number value may safely be interpretted as a pixel. */
-export const unitProps = {
-	animationDelay: 1,
-	animationDuration: 1,
-	backgroundSize: 1,
-	blockSize: 1,
-	border: 1,
-	borderBlock: 1,
-	borderBlockEnd: 1,
-	borderBlockEndWidth: 1,
-	borderBlockStart: 1,
-	borderBlockStartWidth: 1,
-	borderBlockWidth: 1,
-	borderBottom: 1,
-	borderBottomLeftRadius: 1,
-	borderBottomRightRadius: 1,
-	borderBottomWidth: 1,
-	borderEndEndRadius: 1,
-	borderEndStartRadius: 1,
-	borderInlineEnd: 1,
-	borderInlineEndWidth: 1,
-	borderInlineStart: 1,
-	borderInlineStartWidth: 1,
-	borderInlineWidth: 1,
-	borderLeft: 1,
-	borderLeftWidth: 1,
-	borderRadius: 1,
-	borderRight: 1,
-	borderRightWidth: 1,
-	borderSpacing: 1,
-	borderStartEndRadius: 1,
-	borderStartStartRadius: 1,
-	borderTop: 1,
-	borderTopLeftRadius: 1,
-	borderTopRightRadius: 1,
-	borderTopWidth: 1,
-	borderWidth: 1,
-	bottom: 1,
-	columnGap: 1,
-	columnRule: 1,
-	columnRuleWidth: 1,
-	columnWidth: 1,
-	containIntrinsicSize: 1,
-	flexBasis: 1,
-	fontSize: 1,
-	gap: 1,
-	gridAutoColumns: 1,
-	gridAutoRows: 1,
-	gridTemplateColumns: 1,
-	gridTemplateRows: 1,
-	height: 1,
-	inlineSize: 1,
-	inset: 1,
-	insetBlock: 1,
-	insetBlockEnd: 1,
-	insetBlockStart: 1,
-	insetInline: 1,
-	insetInlineEnd: 1,
-	insetInlineStart: 1,
-	left: 1,
-	letterSpacing: 1,
-	margin: 1,
-	marginBlock: 1,
-	marginBlockEnd: 1,
-	marginBlockStart: 1,
-	marginBottom: 1,
-	marginInline: 1,
-	marginInlineEnd: 1,
-	marginInlineStart: 1,
-	marginLeft: 1,
-	marginRight: 1,
-	marginTop: 1,
-	maxBlockSize: 1,
-	maxHeight: 1,
-	maxInlineSize: 1,
-	maxWidth: 1,
-	minBlockSize: 1,
-	minHeight: 1,
-	minInlineSize: 1,
-	minWidth: 1,
-	offsetDistance: 1,
-	offsetRotate: 1,
-	outline: 1,
-	outlineOffset: 1,
-	outlineWidth: 1,
-	overflowClipMargin: 1,
-	padding: 1,
-	paddingBlock: 1,
-	paddingBlockEnd: 1,
-	paddingBlockStart: 1,
-	paddingBottom: 1,
-	paddingInline: 1,
-	paddingInlineEnd: 1,
-	paddingInlineStart: 1,
-	paddingLeft: 1,
-	paddingRight: 1,
-	paddingTop: 1,
-	perspective: 1,
-	right: 1,
-	rowGap: 1,
-	scrollMargin: 1,
-	scrollMarginBlock: 1,
-	scrollMarginBlockEnd: 1,
-	scrollMarginBlockStart: 1,
-	scrollMarginBottom: 1,
-	scrollMarginInline: 1,
-	scrollMarginInlineEnd: 1,
-	scrollMarginInlineStart: 1,
-	scrollMarginLeft: 1,
-	scrollMarginRight: 1,
-	scrollMarginTop: 1,
-	scrollPadding: 1,
-	scrollPaddingBlock: 1,
-	scrollPaddingBlockEnd: 1,
-	scrollPaddingBlockStart: 1,
-	scrollPaddingBottom: 1,
-	scrollPaddingInline: 1,
-	scrollPaddingInlineEnd: 1,
-	scrollPaddingInlineStart: 1,
-	scrollPaddingLeft: 1,
-	scrollPaddingRight: 1,
-	scrollPaddingTop: 1,
-	shapeMargin: 1,
-	textDecoration: 1,
-	textDecorationThickness: 1,
-	textIndent: 1,
-	textUnderlineOffset: 1,
-	top: 1,
-	transitionDelay: 1,
-	transitionDuration: 1,
-	verticalAlign: 1,
-	width: 1,
-	wordSpacing: 1,
+/** CSS Properties whose number values should be unitless. */
+export const unitlessProps = {
+	animationIterationCount: 1,
+	borderImageOutset: 1,
+	borderImageSlice: 1,
+	borderImageWidth: 1,
+	boxFlex: 1,
+	boxFlexGroup: 1,
+	boxOrdinalGroup: 1,
+	columnCount: 1,
+	columns: 1,
+	flex: 1,
+	flexGrow: 1,
+	flexPositive: 1,
+	flexShrink: 1,
+	flexNegative: 1,
+	flexOrder: 1,
+	gridRow: 1,
+	gridRowEnd: 1,
+	gridRowSpan: 1,
+	gridRowStart: 1,
+	gridColumn: 1,
+	gridColumnEnd: 1,
+	gridColumnSpan: 1,
+	gridColumnStart: 1,
+	msGridRow: 1,
+	msGridRowSpan: 1,
+	msGridColumn: 1,
+	msGridColumnSpan: 1,
+	fontWeight: 1,
+	lineHeight: 1,
+	opacity: 1,
+	order: 1,
+	orphans: 1,
+	tabSize: 1,
+	widows: 1,
+	zIndex: 1,
+	zoom: 1,
+	WebkitLineClamp: 1,
+
+	// SVG-related properties
+	fillOpacity: 1,
+	floodOpacity: 1,
+	stopOpacity: 1,
+	strokeDasharray: 1,
+	strokeDashoffset: 1,
+	strokeMiterlimit: 1,
+	strokeOpacity: 1,
+	strokeWidth: 1,
 }

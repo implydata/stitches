@@ -1,4 +1,4 @@
-import { $$composers } from '../utility/composers.js'
+import { internal } from '../utility/internal.js'
 import { createMemo } from '../utility/createMemo.js'
 import { define } from '../utility/define.js'
 import { hasNames } from '../utility/hasNames.js'
@@ -7,89 +7,82 @@ import { hasOwn } from '../utility/hasOwn.js'
 import { toCssRules } from '../convert/toCssRules.js'
 import { toHash } from '../convert/toHash.js'
 import { toTailDashed } from '../convert/toTailDashed.js'
+import { createRulesInjectionDeferrer } from '../sheet.js'
 
-/** @typedef {import('./css').Composer} Composer */
-/** @typedef {import('./css').Config} Config */
-/** @typedef {import('./css').InitComposer} InitComposer */
-/** @typedef {import('./css').PrefilledVariants} PrefilledVariants */
-/** @typedef {import('./css').Render} Render */
-/** @typedef {import('./css').Styling} Styling */
-/** @typedef {import('./css').UndefinedVariants} UndefinedVariants */
-/** @typedef {import('./css').VariantMatcher} VariantMatcher */
-/** @typedef {import('./css').VariantProps} VariantProps */
-/** @typedef {import('./css').VariantTuple} VariantTuple */
-
-/** @typedef {import('../createSheet').SheetGroup} SheetGroup */
-
-const createComponentFunctionMap = createMemo()
+const createCssFunctionMap = createMemo()
 
 /** Returns a function that applies component styles. */
-export const createComponentFunction = (/** @type {Config} */ config, /** @type {SheetGroup} */ sheet) =>
-	createComponentFunctionMap(config, () => (...args) => {
-		/** @type {string | Function} Component type, which may be a function or a string. */
-		let componentType = null
-
-		/** @type {Set<Composer>} Composers. */
-		const composers = new Set()
-
-		for (const arg of args) {
-			// skip any void argument
-			if (arg == null) continue
-
-			switch (typeof arg) {
-				case 'function':
-					// allow a composer-less function to be the component type
-					if (componentType == null && !arg[$$composers]) {
-						componentType = arg
-
-						break
-					}
-
-				case 'object':
-					// allow a type property to be this component type
-					if (componentType == null && arg.type != null) componentType = arg.type
-
-					// copy all composers into this component
-					if ($$composers in arg)
-						for (const composer of arg[$$composers]) {
-							composers.add(composer)
-						}
-					// otherwise, add a new composer to this component
-					else if (!('$$typeof' in arg)) {
-						const composer = createComposer(arg, config)
-
-						composers.add(composer)
-					}
-
-					break
-
-				case 'string':
-					componentType = arg
+export const createCssFunction = (config, sheet) =>
+	createCssFunctionMap(config, () => {
+		const _css = (args, componentConfig = {}) => {
+			let internals = {
+				type: null,
+				composers: new Set(),
 			}
+
+			for (const arg of args) {
+				// skip any void argument
+				if (arg == null) continue
+
+				// conditionally extend the component
+				if (arg[internal]) {
+					if (internals.type == null) internals.type = arg[internal].type
+
+					for (const composer of arg[internal].composers) {
+						internals.composers.add(composer)
+					}
+				}
+
+				// otherwise, conditionally define the component type
+				else if (arg.constructor !== Object || arg.$$typeof) {
+					if (internals.type == null) internals.type = arg
+				}
+
+				// otherwise, add a new composer to this component
+				else {
+					internals.composers.add(createComposer(arg, config, componentConfig))
+				}
+			}
+
+			// set the component type if none was set
+			if (internals.type == null) internals.type = 'span'
+			if (!internals.composers.size) internals.composers.add(['PJLV', {}, [], [], {}, []])
+
+			return createRenderer(config, internals, sheet, componentConfig)
 		}
 
-		// set the component type if none was set
-		if (componentType == null) componentType = 'span'
-		if (!composers.size) composers.add(['PJLV', {}, [], [], {}, []])
+		const css = (...args) => _css(args)
 
-		return createRenderer(config, componentType, composers, sheet)
+		css.withConfig =
+			(componentConfig) =>
+			(...args) =>
+				_css(args, componentConfig)
+
+		return css
 	})
 
 /** Creates a composer from a configuration object. */
-const createComposer = (/** @type {InitComposer} */ { variants: initSingularVariants, compoundVariants: initCompoundVariants, defaultVariants: initDefaultVariants, ...style }, /** @type {Config} */ config) => {
+const createComposer = (
+	{
+		variants: initSingularVariants,
+		compoundVariants: initCompoundVariants,
+		defaultVariants: initDefaultVariants,
+		...style
+	},
+	config,
+	{ componentId, displayName },
+) => {
 	/** @type {string} Composer Unique Identifier. @see `{CONFIG_PREFIX}-?c-{STYLE_HASH}` */
-	const className = `${toTailDashed(config.prefix)}c-${toHash(style)}`
+	const hash = componentId || toHash(style)
+	const componentNamePrefix = displayName ? 'c-' + displayName + '' : 'c'
+	const className = `${toTailDashed(config.prefix)}${componentNamePrefix}-${hash}`
 
-	/** @type {VariantTuple[]} */
 	const singularVariants = []
 
-	/** @type {VariantTuple[]} */
 	const compoundVariants = []
 
-	/** @type {PrefilledVariants} */
 	const prefilledVariants = Object.create(null)
 
-	/** @type {UndefinedVariants} */
 	const undefinedVariants = []
 
 	for (const variantName in initDefaultVariants) {
@@ -104,14 +97,12 @@ const createComposer = (/** @type {InitComposer} */ { variants: initSingularVari
 			const variantPairs = initSingularVariants[name]
 
 			for (const pair in variantPairs) {
-				/** @type {VariantMatcher} */
 				const vMatch = { [name]: String(pair) }
 
 				if (String(pair) === 'undefined') undefinedVariants.push(name)
 
 				const vStyle = variantPairs[pair]
 
-				/** @type {VariantTuple} */
 				const variant = [vMatch, vStyle, !hasNames(vStyle)]
 
 				singularVariants.push(variant)
@@ -122,56 +113,47 @@ const createComposer = (/** @type {InitComposer} */ { variants: initSingularVari
 	// add compound variants
 	if (typeof initCompoundVariants === 'object' && initCompoundVariants) {
 		for (const compoundVariant of initCompoundVariants) {
-			/** @type {InitComposer['compoundVariants']} */
 			let { css: vStyle, ...vMatch } = compoundVariant
 
-			vStyle = typeof vStyle === 'object' && vStyle || {}
+			vStyle = (typeof vStyle === 'object' && vStyle) || {}
 
 			// serialize all compound variant pairs
 			for (const name in vMatch) vMatch[name] = String(vMatch[name])
 
-			/** @type {VariantTuple} */
 			const variant = [vMatch, vStyle, !hasNames(vStyle)]
 
 			compoundVariants.push(variant)
 		}
 	}
 
-	return /** @type {Composer} */ ([className, style, singularVariants, compoundVariants, prefilledVariants, undefinedVariants])
-} // prettier-ignore
+	return [className, style, singularVariants, compoundVariants, prefilledVariants, undefinedVariants]
+}
 
-const createRenderer = (
-	/** @type {Config} */ config,
-	/** @type {string | Function} */ type,
-	/** @type {Set<Composer>} */ composers,
-	/** @type {import('../createSheet').SheetGroup} */ sheet
-) => {
-	const [
-		initialClassName,
-		baseClassNames,
-		prefilledVariants,
-		undefinedVariants
-	] = getPreparedDataFromComposers(composers)
+const createRenderer = (config, internals, sheet, { shouldForwardStitchesProp }) => {
+	const [baseClassName, baseClassNames, prefilledVariants, undefinedVariants] = getPreparedDataFromComposers(
+		internals.composers,
+	)
 
-	const selector = `.${initialClassName}`
+	const deferredInjector =
+		typeof internals.type === 'function' || !!internals.type.$$typeof ? createRulesInjectionDeferrer(sheet) : null
+	const injectionTarget = (deferredInjector || sheet).rules
 
-	/** @type {Render} */
+	const selector = `.${baseClassName}${baseClassNames.length > 1 ? `:where(.${baseClassNames.slice(1).join('.')})` : ``}`
+
 	const render = (props) => {
-		props = typeof props === 'object' && props || emptyProps
+		props = (typeof props === 'object' && props) || empty
 
 		// 1. we cannot mutate `props`
 		// 2. we delete variant props
 		// 3. we delete `css` prop
 		// therefore: we must create a new props & css variables
-		const { css, ...forwardProps } = props
+		const { ...forwardProps } = props
 
-		/** @type {VariantProps} */
 		const variantProps = {}
 
 		for (const name in prefilledVariants) {
-			delete forwardProps[name]
-
 			if (name in props) {
+				if (!shouldForwardStitchesProp?.(name)) delete forwardProps[name]
 				let data = props[name]
 
 				if (typeof data === 'object' && data) {
@@ -182,18 +164,14 @@ const createRenderer = (
 				} else {
 					data = String(data)
 
-					variantProps[name] = (
-						data === 'undefined' && !undefinedVariants.has(name)
-							? prefilledVariants[name]
-						: data
-					)
+					variantProps[name] = data === 'undefined' && !undefinedVariants.has(name) ? prefilledVariants[name] : data
 				}
 			} else {
 				variantProps[name] = prefilledVariants[name]
 			}
 		}
 
-		const classSet = new Set([ ...baseClassNames ])
+		const classSet = new Set([...baseClassNames])
 
 		// 1. builds up the variants (fills in defaults, calculates @initial on responsive, etc.)
 		// 2. iterates composers
@@ -202,12 +180,12 @@ const createRenderer = (
 		// 2.2.1. orders regular variants before responsive variants
 		// 2.3. iterate their compound variants, add their compound variant classes
 
-		for (const [composerBaseClass, composerBaseStyle, singularVariants, compoundVariants] of composers) {
+		for (const [composerBaseClass, composerBaseStyle, singularVariants, compoundVariants] of internals.composers) {
 			if (!sheet.rules.styled.cache.has(composerBaseClass)) {
 				sheet.rules.styled.cache.add(composerBaseClass)
 
-				toCssRules(composerBaseStyle, [`.${composerBaseClass}`], [], config, cssText => {
-					sheet.rules.styled.apply(cssText)
+				toCssRules(composerBaseStyle, [`.${composerBaseClass}`], [], config, (cssText) => {
+					injectionTarget.styled.apply(cssText)
 				})
 			}
 
@@ -217,16 +195,22 @@ const createRenderer = (
 			for (const variantToAdd of singularVariantsToAdd) {
 				if (variantToAdd === undefined) continue
 
-				for (const [vClass, vStyle] of variantToAdd) {
+				for (const [vClass, vStyle, isResponsive] of variantToAdd) {
 					const variantClassName = `${composerBaseClass}-${toHash(vStyle)}-${vClass}`
 
 					classSet.add(variantClassName)
 
-					if (!sheet.rules.onevar.cache.has(variantClassName)) {
-						sheet.rules.onevar.cache.add(variantClassName)
+					const groupCache = (isResponsive ? sheet.rules.resonevar : sheet.rules.onevar).cache
+					/*
+					 * make sure that normal variants are injected before responsive ones
+					 * @see {@link https://github.com/stitchesjs/stitches/issues/737|github}
+					 */
+					const targetInjectionGroup = isResponsive ? injectionTarget.resonevar : injectionTarget.onevar
 
-						toCssRules(vStyle, [`.${variantClassName}`], [], config, cssText => {
-							sheet.rules.onevar.apply(cssText)
+					if (!groupCache.has(variantClassName)) {
+						groupCache.add(variantClassName)
+						toCssRules(vStyle, [`.${variantClassName}`], [], config, (cssText) => {
+							targetInjectionGroup.apply(cssText)
 						})
 					}
 				}
@@ -243,8 +227,8 @@ const createRenderer = (
 					if (!sheet.rules.allvar.cache.has(variantClassName)) {
 						sheet.rules.allvar.cache.add(variantClassName)
 
-						toCssRules(vStyle, [`.${variantClassName}`], [], config, cssText => {
-							sheet.rules.allvar.apply(cssText)
+						toCssRules(vStyle, [`.${variantClassName}`], [], config, (cssText) => {
+							injectionTarget.allvar.apply(cssText)
 						})
 					}
 				}
@@ -252,59 +236,64 @@ const createRenderer = (
 		}
 
 		// apply css property styles
+		const css = forwardProps.css
 		if (typeof css === 'object' && css) {
+			if (!shouldForwardStitchesProp?.('css')) delete forwardProps.css
 			/** @type {string} Inline Class Unique Identifier. @see `{COMPOSER_UUID}-i{VARIANT_UUID}-css` */
-			const iClass = `${initialClassName}-i${toHash(css)}-css`
+			const iClass = `${baseClassName}-i${toHash(css)}-css`
 
 			classSet.add(iClass)
 
 			if (!sheet.rules.inline.cache.has(iClass)) {
 				sheet.rules.inline.cache.add(iClass)
 
-				toCssRules(css, [`.${iClass}`], [], config, cssText => {
-					sheet.rules.inline.apply(cssText)
+				toCssRules(css, [`.${iClass}`], [], config, (cssText) => {
+					injectionTarget.inline.apply(cssText)
 				})
 			}
 		}
 
-		for (const propClassName of String(props.className || '').trim().split(/\s+/)) {
+		for (const propClassName of String(props.className || '')
+			.trim()
+			.split(/\s+/)) {
 			if (propClassName) classSet.add(propClassName)
 		}
 
-		const renderedClassName = forwardProps.className = [ ...classSet ].join(' ')
+		const renderedClassName = (forwardProps.className = [...classSet].join(' '))
 
 		const renderedToString = () => renderedClassName
 
 		return {
-			type,
+			type: internals.type,
 			className: renderedClassName,
 			selector,
 			props: forwardProps,
 			toString: renderedToString,
+			deferredInjector,
 		}
 	}
 
 	const toString = () => {
-		if (!sheet.rules.styled.cache.has(initialClassName)) render()
-		return initialClassName
+		if (!sheet.rules.styled.cache.has(baseClassName)) render()
+
+		return baseClassName
 	}
 
 	return define(render, {
-		type,
-		className: initialClassName,
+		className: baseClassName,
 		selector,
-		[$$composers]: composers,
+		[internal]: internals,
 		toString,
 	})
-} // prettier-ignore
+}
 
 /** Returns useful data that can be known before rendering. */
-const getPreparedDataFromComposers = (/** @type {Set<Composer>} */ composers) => {
+const getPreparedDataFromComposers = (composers) => {
 	/** Class name of the first composer. */
-	let initialClassName = ''
+	let baseClassName = ''
 
 	/** @type {string[]} Combined class names for all composers. */
-	const combinedClassNames = []
+	const baseClassNames = []
 
 	/** @type {PrefilledVariants} Combined variant pairings for all composers. */
 	const combinedPrefilledVariants = {}
@@ -313,40 +302,25 @@ const getPreparedDataFromComposers = (/** @type {Set<Composer>} */ composers) =>
 	const combinedUndefinedVariants = []
 
 	for (const [className, , , , prefilledVariants, undefinedVariants] of composers) {
-		if (initialClassName === '') initialClassName = className
+		if (baseClassName === '') baseClassName = className
 
-		combinedClassNames.push(className)
+		baseClassNames.push(className)
 
 		combinedUndefinedVariants.push(...undefinedVariants)
 
 		for (const name in prefilledVariants) {
 			const data = prefilledVariants[name]
-			if (combinedPrefilledVariants[name] === undefined || data !== 'undefined' || undefinedVariants.includes(data)) combinedPrefilledVariants[name] = data
+			if (combinedPrefilledVariants[name] === undefined || data !== 'undefined' || undefinedVariants.includes(data))
+				combinedPrefilledVariants[name] = data
 		}
 	}
 
-	/** @type {[string, string[], PrefilledVariants, Set<UndefinedVariants>]} */
-	const preparedData = [
-		initialClassName,
-		combinedClassNames,
-		combinedPrefilledVariants,
-		new Set(combinedUndefinedVariants)
-	]
+	const preparedData = [baseClassName, baseClassNames, combinedPrefilledVariants, new Set(combinedUndefinedVariants)]
 
 	return preparedData
-} // prettier-ignore
+}
 
-const getTargetVariantsToAdd = (
-	/** @type {VariantTuple[]} */
-	targetVariants,
-	/** @type {VariantProps} */
-	variantProps,
-	/** @type {Config['media']} */
-	media,
-	/** @type {boolean} */
-	isCompoundVariant,
-) => {
-	/** @type {[string, Styling][][]} */
+const getTargetVariantsToAdd = (targetVariants, variantProps, media, isCompoundVariant) => {
 	const targetVariantsToAdd = []
 
 	targetVariants: for (let [vMatch, vStyle, vEmpty] of targetVariants) {
@@ -356,9 +330,9 @@ const getTargetVariantsToAdd = (
 		/** Position the variant should be inserted into. */
 		let vOrder = 0
 
-		/** @type {string & keyof typeof vMatch} */
 		let vName
 
+		let isResponsive = false
 		for (vName in vMatch) {
 			const vPair = vMatch[vName]
 
@@ -372,21 +346,31 @@ const getTargetVariantsToAdd = (
 				let didMatch
 
 				let qOrder = 0
-
+				// media queries matching the same variant
+				let matchedQueries
 				for (const query in pPair) {
 					if (vPair === String(pPair[query])) {
 						if (query !== '@initial') {
-							vStyle = {
-								[query in media ? media[query] : query]: vStyle,
-							}
+							// check if the cleanQuery is in the media config and then we push the resulting media query to the matchedQueries array,
+							// if not, we remove the @media from the beginning and push it to the matched queries which then will be resolved a few lines down
+							// when we finish working on this variant and want wrap the vStyles with the matchedQueries
+							const cleanQuery = query.slice(1)
+							;(matchedQueries = matchedQueries || []).push(
+								cleanQuery in media ? media[cleanQuery] : query.replace(/^@media ?/, ''),
+							)
+							isResponsive = true
 						}
 
 						vOrder += qOrder
-
 						didMatch = true
 					}
 
 					++qOrder
+				}
+				if (matchedQueries && matchedQueries.length) {
+					vStyle = {
+						['@media ' + matchedQueries.join(', ')]: vStyle,
+					}
 				}
 
 				if (!didMatch) continue targetVariants
@@ -395,12 +379,15 @@ const getTargetVariantsToAdd = (
 			// non-matches
 			else continue targetVariants
 		}
-
-		;(targetVariantsToAdd[vOrder] = targetVariantsToAdd[vOrder] || []).push([isCompoundVariant ? `cv` : `${vName}-${vMatch[vName]}`, vStyle])
+		;(targetVariantsToAdd[vOrder] = targetVariantsToAdd[vOrder] || []).push([
+			isCompoundVariant ? `cv` : `${vName}-${vMatch[vName]}`,
+			vStyle,
+			isResponsive,
+		])
 	}
 
 	return targetVariantsToAdd
 }
 
 /** Fallback props object used when no props are passed. */
-const emptyProps = {}
+const empty = {}
